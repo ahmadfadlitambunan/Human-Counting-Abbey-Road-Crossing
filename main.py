@@ -1,6 +1,6 @@
 import numpy as np
 # You can uncomment these line below if you want to use GPU
-import torch
+#import torch
 import os
 import cv2
 from deep_sort_realtime.deepsort_tracker import DeepSort as DeepSortTracker
@@ -8,8 +8,8 @@ from ultralytics import YOLO
 
 # You can uncomment these line below if you want to use GPU
 """ Initiate Cuda, if You have it """
-print('GPU Available : ', torch.cuda.is_available())
-print('GPU Device    : ', torch.cuda.get_device_name())
+#print('GPU Available : ', torch.cuda.is_available())
+#print('GPU Device    : ', torch.cuda.get_device_name())
 
 """ Load Model Yolov8 """
 # You can use one of the model inference below
@@ -20,7 +20,7 @@ print('GPU Device    : ', torch.cuda.get_device_name())
 model = YOLO("yolov8x.pt")
 
 # You can uncomment these line below if you want to use GPU
-model.to('cuda')
+#model.to('cuda')
 
 """ Load Deep Sort Tracker """
 object_tracker = DeepSortTracker()
