@@ -1,15 +1,15 @@
 import numpy as np
 # You can uncomment these line below if you want to use GPU
-# import torch
+import torch
 import os
 import cv2
 from deep_sort_realtime.deepsort_tracker import DeepSort as DeepSortTracker
 from ultralytics import YOLO
 
 # You can uncomment these line below if you want to use GPU
-# """ Initiate Cuda, if You have it """
-# print('GPU Available : ', torch.cuda.is_available())
-# print('GPU Device    : ', torch.cuda.get_device_name())
+""" Initiate Cuda, if You have it """
+print('GPU Available : ', torch.cuda.is_available())
+print('GPU Device    : ', torch.cuda.get_device_name())
 
 """ Load Model Yolov8 """
 # You can use one of the model inference below
@@ -19,7 +19,8 @@ from ultralytics import YOLO
 # model = YOLO("yolov8l.pt")
 model = YOLO("yolov8x.pt")
 
-# model.to('cuda')
+# You can uncomment these line below if you want to use GPU
+model.to('cuda')
 
 """ Load Deep Sort Tracker """
 object_tracker = DeepSortTracker()
@@ -32,6 +33,14 @@ ROI_counter_id = set()
 """ Load Video """
 video_path = os.path.join('.', 'data', 'AbbeyRoad.mp4')
 cap = cv2.VideoCapture(video_path)
+
+""" Save Video """
+# You can uncomment these line below if you want to save the output video
+# video_out_path = os.path.join('.', 'data', 'out.mp4')
+# cap_out = cv2.VideoWriter(video_out_path, cv2.VideoWriter_fourcc(*'MP4V'), cap.get(cv2.CAP_PROP_FPS),
+#                           (1280, 720))
+
+
 
 """ Read Frames """
 while cap.isOpened():
@@ -86,6 +95,8 @@ while cap.isOpened():
                         1.5, (255, 255, 255), thickness=2)
 
     # Show Video
+    # You can uncomment these line below if you want to save the output video
+    # cap_out.write(frame)
     cv2.imshow("Abbey Road Crossing", frame)
 
     # Video will be closed when 'q' button is pressed
