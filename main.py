@@ -1,17 +1,25 @@
 import numpy as np
-import torch
+# You can uncomment these line below if you want to use GPU
+# import torch
 import os
 import cv2
 from deep_sort_realtime.deepsort_tracker import DeepSort as DeepSortTracker
 from ultralytics import YOLO
 
-""" Initiate Cuda, if You have it """
-print('GPU Available : ', torch.cuda.is_available())
-print('GPU Device    : ', torch.cuda.get_device_name())
+# You can uncomment these line below if you want to use GPU
+# """ Initiate Cuda, if You have it """
+# print('GPU Available : ', torch.cuda.is_available())
+# print('GPU Device    : ', torch.cuda.get_device_name())
 
 """ Load Model Yolov8 """
+# You can use one of the model inference below
+# model = YOLO("yolov8n.pt")
+# model = YOLO("yolov8s.pt")
+# model = YOLO("yolov8m.pt")
+# model = YOLO("yolov8l.pt")
 model = YOLO("yolov8x.pt")
-model.to('cuda')
+
+# model.to('cuda')
 
 """ Load Deep Sort Tracker """
 object_tracker = DeepSortTracker()
@@ -49,6 +57,7 @@ while cap.isOpened():
                 continue
             if track.original_ltwh is None or track.track_id is None:
                 continue
+            # Extracting the Bounding Box and ID
             bbox = track.original_ltwh
             track_id = track.track_id
 
@@ -73,7 +82,7 @@ while cap.isOpened():
             # Drawing bounding box
             cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), color=(0, 0, 255), thickness=2)
 
-            cv2.putText(frame, "Crossed: " + str(len(ROI_counter_id)), (0, 0 + 40), cv2.FONT_HERSHEY_SIMPLEX,
+            cv2.putText(frame, "Crossed: " + str(len(ROI_counter_id)), (0, 0 + 50), cv2.FONT_HERSHEY_SIMPLEX,
                         1.5, (255, 255, 255), thickness=2)
 
     # Show Video
